@@ -399,6 +399,7 @@
       <select id="select-usuario" onchange="mudarUsuarioAtivo()">
         <!-- As opções JavaScript -->
       </select>
+      <button type="button" class="botao botao-sucesso" style="padding: 4px 8px; font-size: 12px;" onclick="abrirModalCadastroUsuario()" title="Cadastrar Novo Usuário">+</button>
     </div>
   </header>
 
@@ -471,7 +472,7 @@
 
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
         <h2 style="font-size: 18px;">Itens Cadastrados no Meu Nome</h2>
-        <button class="botao botao-sucesso" onclick="abrirModalCadastroItem()">+ Adicionar Nova Miniatura</button>
+        <button class="botao botao-sucesso" onclick="abrirModalCadastroItem()">+ Adicionar Novo Item</button>
       </div>
 
       <div id="grade-minha-colecao" class="grade-itens">
@@ -522,7 +523,7 @@
   <div id="modal-item" class="modal-fundo">
     <div class="modal-caixa">
       <div class="modal-cabecalho">
-        <h3 id="modal-titulo" style="font-size: 16px;">Adicionar Miniatura</h3>
+        <h3 id="modal-titulo" style="font-size: 16px;">Adicionar Item</h3>
         <button onclick="fecharModais()" style="background:none; border:none; color:white; font-size: 18px; cursor:pointer;">&times;</button>
       </div>
       
@@ -621,6 +622,33 @@
         <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
           <button type="button" class="botao" style="background-color: #475569;" onclick="fecharModais()">Cancelar</button>
           <button type="submit" class="botao botao-amarelo">Enviar Oferta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Cadastro de usuario-->
+  <div id="modal-usuario" class="modal-fundo">
+    <div class="modal-caixa" style="max-width: 400px;">
+      <div class="modal-cabecalho">
+        <h3 style="font-size: 16px;">Cadastrar Novo Usuário</h3>
+        <button onclick="fecharModais()" style="background:none; border:none; color:white; font-size: 18px; cursor:pointer;">&times;</button>
+      </div>
+
+      <form onsubmit="salvarNovoUsuario(event)">
+        <div class="campo-form">
+          <label for="novo-usuario-nome">Nome Completo *</label>
+          <input type="text" id="novo-usuario-nome" required placeholder="Ex: Isadora Furtado">
+        </div>
+
+        <div class="campo-form">
+          <label for="novo-usuario-cidade">Cidade / UF *</label>
+          <input type="text" id="novo-usuario-cidade" required placeholder="Ex: Itupeva / SP">
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
+          <button type="button" class="botao" style="background-color: #475569;" onclick="fecharModais()">Cancelar</button>
+          <button type="submit" class="botao botao-sucesso">Cadastrar</button>
         </div>
       </form>
     </div>
@@ -968,7 +996,7 @@
     }
 
     function abrirModalCadastroItem() {
-      document.getElementById("modal-titulo").textContent = "Adicionar Miniatura";
+      document.getElementById("modal-titulo").textContent = "Adicionar Item";
       document.getElementById("form-item-id").value = "";
       document.getElementById("form-nome").value = "";
       document.getElementById("form-franquia").value = "";
@@ -1242,6 +1270,37 @@
       document.getElementById("modal-item").style.display = "none";
       document.getElementById("modal-troca").style.display = "none";
       document.getElementById("modal-imagem").style.display = "none";
+      document.getElementById("modal-usuario").style.display = "none";
+    }
+
+    function abrirModalCadastroUsuario() {
+      document.getElementById("novo-usuario-nome").value = "";
+      document.getElementById("novo-usuario-cidade").value = "";
+      document.getElementById("modal-usuario").style.display = "flex";
+    }
+
+    function salvarNovoUsuario(evento) {
+      evento.preventDefault();
+      const nome = document.getElementById("novo-usuario-nome").value.trim();
+      const cidade = document.getElementById("novo-usuario-cidade").value.trim();
+
+      if (!nome || !cidade) return;
+
+      const novoUsuario = {
+        id: Date.now(),
+        nome: nome,
+        cidade: cidade
+      };
+
+      // Definir como um perfil ativo
+      usuarios.push(novoUsuario);
+      usuarioAtualId = novoUsuario.id;
+
+      salvarTudoNoLocalStorage();
+      popularSelectUsuarios();
+      fecharModais();
+      abrirAba('colecao');
+      alert("Usuário " + nome + " cadastrado com sucesso! Você já está conectado.");
     }
 
     function abrirModalImagem(urlImagem, titulo, subtitulo) {
