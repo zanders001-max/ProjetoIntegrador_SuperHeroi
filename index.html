@@ -5,16 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guilda dos Heróis - Catálogo & Troca de Miniaturas/Action Figures</title>
   <style>
-    /* ========================================================
-       ESTILOS GERAIS (CSS PURO, SIMPLES E DIDÁTICO)
-       ======================================================== */
     :root {
       --cor-fundo: #0f172a;
       --cor-card: #1e293b;
       --cor-borda: #334155;
       --cor-texto: #f8fafc;
       --cor-texto-secundaria: #94a3b8;
-      --cor-destaque: #f59e0b; /* Amarelo geek */
+      --cor-destaque: #f59e0b;
       --cor-azul: #2563eb;
       --cor-vermelho: #dc2626;
       --cor-verde: #16a34a;
@@ -109,7 +106,7 @@
       border-color: #3b82f6;
     }
 
-    /* Estrutura Principal */
+    /* Arvore Principal */
     main {
       max-width: 1100px;
       margin: 20px auto;
@@ -176,7 +173,7 @@
     .botao-perigo { background-color: var(--cor-vermelho); }
     .botao-amarelo { background-color: var(--cor-destaque); color: #000; }
 
-    /* Grades de Miniaturas */
+    /* Grades */
     .grade-itens {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -256,7 +253,6 @@
     .badge-colecao { background-color: #334155; color: #cbd5e1; }
     .badge-raridade { background-color: #581c87; color: #d8b4fe; }
 
-    /* Modais Simples (Popups) */
     .modal-fundo {
       display: none;
       position: fixed;
@@ -282,7 +278,7 @@
       padding: 20px;
     }
 
-    /* Caixa especial para visualização de imagem em tamanho grande */
+    /* Modal pra ver a imagem grande */
     .modal-caixa-imagem {
       background-color: var(--cor-card);
       border: 1px solid var(--cor-borda);
@@ -390,18 +386,18 @@
   <!-- CABEÇALHO DO SITE -->
   <header>
     <div class="marca">
-      <span style="font-size: 28px;">🛡️</span>
+      <span style="font-size: 38px;">🦸‍♂️</span>
       <div>
         <h1>Guilda dos Heróis</h1>
         <p style="font-size: 11px; color: var(--cor-texto-secundaria);">Catálogo & Trocas de Colecionáveis</p>
       </div>
     </div>
 
-    <!-- SELETOR DE USUÁRIO ATIVO (SIMULAÇÃO DE LOGIN) -->
+    <!-- Seletor de perfil de usuarios -->
     <div class="sessao-usuario">
       <label for="select-usuario" style="font-size: 13px;">Usuário Ativo:</label>
       <select id="select-usuario" onchange="mudarUsuarioAtivo()">
-        <!-- Opções geradas via JavaScript -->
+        <!-- As opções JavaScript -->
       </select>
     </div>
   </header>
@@ -413,15 +409,11 @@
     <button id="btn-aba-propostas" onclick="abrirAba('propostas')">Central de Trocas (<span id="contagem-propostas">0</span>)</button>
   </nav>
 
-  <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
   <main>
 
-    <!-- ============================================== -->
-    <!-- ABA 1: VITRINE PÚBLICA (TODOS OS ITENS)       -->
-    <!-- ============================================== -->
+    <!-- Aba: Vitrine de itens (tem que aparecer todos os itens)       -->
     <section id="aba-vitrine" class="aba-conteudo ativa">
       
-      <!-- Filtros simples -->
       <div class="painel-filtros">
         <div>
           <label for="filtro-texto">Buscar por Nome ou Fabricante:</label>
@@ -431,7 +423,6 @@
           <label for="filtro-categoria">Categoria:</label>
           <select id="filtro-categoria" onchange="filtrarVitrine()">
             <option value="">Todas</option>
-            <!-- Opções inseridas via JS -->
           </select>
         </div>
         <div>
@@ -456,18 +447,13 @@
         </div>
       </div>
 
-      <!-- Grade onde aparecem as miniaturas -->
       <div id="grade-vitrine" class="grade-itens">
-        <!-- Itens injetados via JavaScript -->
       </div>
     </section>
 
-    <!-- ============================================== -->
-    <!-- ABA 2: MINHA COLEÇÃO (CRUD DO USUÁRIO)         -->
-    <!-- ============================================== -->
+    <!-- ABA 2: MINHA COLEÇÃO (são as peças do usuario)         -->
     <section id="aba-colecao" class="aba-conteudo">
       
-      <!-- Resumo numérico simples -->
       <div class="painel-resumo">
         <div>
           <h4>Total de Peças</h4>
@@ -489,13 +475,10 @@
       </div>
 
       <div id="grade-minha-colecao" class="grade-itens">
-        <!-- Meus itens via JS -->
       </div>
     </section>
 
-    <!-- ============================================== -->
     <!-- ABA 3: PROPOSTAS DE TROCA                      -->
-    <!-- ============================================== -->
     <section id="aba-propostas" class="aba-conteudo">
       <h2 style="font-size: 18px; margin-bottom: 10px;">Propostas Recebidas (Outros usuários querendo meus itens)</h2>
       <div style="overflow-x: auto;">
@@ -510,7 +493,6 @@
             </tr>
           </thead>
           <tbody id="tabela-propostas-recebidas">
-            <!-- Linhas via JS -->
           </tbody>
         </table>
       </div>
@@ -536,9 +518,7 @@
 
   </main>
 
-  <!-- ============================================== -->
-  <!-- MODAL: CADASTRO / EDIÇÃO DE MINIATURA (FORM)  -->
-  <!-- ============================================== -->
+  <!-- MODAL: Cadastros e edição  -->
   <div id="modal-item" class="modal-fundo">
     <div class="modal-caixa">
       <div class="modal-cabecalho">
@@ -547,7 +527,6 @@
       </div>
       
       <form id="form-item" onsubmit="salvarItem(event)">
-        <!-- Campo oculto para armazenar ID em caso de edição -->
         <input type="hidden" id="form-item-id">
 
         <div class="campo-form">
@@ -568,7 +547,6 @@
         <div class="campo-form">
           <label for="form-categoria">Categoria *</label>
           <select id="form-categoria" required>
-            <!-- Opções via JS -->
           </select>
         </div>
 
@@ -617,9 +595,7 @@
     </div>
   </div>
 
-  <!-- ============================================== -->
-  <!-- MODAL: PROPOR TROCA                           -->
-  <!-- ============================================== -->
+  <!-- PARTE DE PROPOR TROCA                           -->
   <div id="modal-troca" class="modal-fundo">
     <div class="modal-caixa">
       <div class="modal-cabecalho">
@@ -639,7 +615,6 @@
         <div class="campo-form">
           <label for="troca-meu-item">Escolha um item seu para oferecer em troca:</label>
           <select id="troca-meu-item" required>
-            <!-- Preenchido via JS com itens disponíveis do usuário ativo -->
           </select>
         </div>
 
@@ -651,9 +626,6 @@
     </div>
   </div>
 
-  <!-- ============================================== -->
-  <!-- MODAL: VISUALIZAR IMAGEM EM TAMANHO REAL       -->
-  <!-- ============================================== -->
   <div id="modal-imagem" class="modal-fundo" onclick="fecharModalImagemSeClicarFundo(event)">
     <div class="modal-caixa-imagem">
       <div class="modal-cabecalho">
@@ -673,20 +645,14 @@
     </div>
   </div>
 
-  <!-- ========================================================
-       CÓDIGO JAVASCRIPT
-       ======================================================== -->
+  <!-- CÓDIGO JAVASCRIPT -->
   <script>
-    // Imagem padrão SVG para substituição automática caso a imagem não carregue
     const IMAGEM_PADRAO = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%231e293b'/><text x='50%25' y='50%25' fill='%23f59e0b' font-size='20' font-family='sans-serif' text-anchor='middle' dominant-baseline='middle'>Guilda dos Heróis</text></svg>";
 
-    /* ----------------------------------------------------
-       1. ESTRUTURA DE DADOS INICIAIS (ARRAYS SIMPLES)
-       ---------------------------------------------------- */
     const DADOS_INICIAIS_USUARIOS = [
-      { id: 1, nome: "Bruce Wayne", cidade: "São Paulo / SP" },
-      { id: 2, nome: "Peter Parker", cidade: "Rio de Janeiro / RJ" },
-      { id: 3, nome: "Clark Kent", cidade: "São Paulo / SP" }
+      { id: 1, nome: "Anderson de Souza", cidade: "São Paulo / SP" },
+      { id: 2, nome: "Leonardo Saba", cidade: "Rio de Janeiro / RJ" },
+      { id: 3, nome: "Milton Santos", cidade: "São Paulo / SP" }
     ];
 
     const DADOS_INICIAIS_CATEGORIAS = [
@@ -696,7 +662,6 @@
       { id: 4, nome: "Cards" }
     ];
 
-    // URLs públicas com fallback relativo para a pasta Image/
     const DADOS_INICIAIS_ITENS = [
       {
         id: 101,
@@ -781,23 +746,20 @@
     const DADOS_INICIAIS_PROPOSTAS = [
       {
         id: 1,
-        de_usuario_id: 2,       // Peter
-        para_usuario_id: 1,     // Bruce
+        de_usuario_id: 2,       // Leonardo
+        para_usuario_id: 1,     // Anderson
         item_oferecido_id: 103, // Homem de Ferro
         item_desejado_id: 101,  // Batman
         status: "Pendente"
       }
     ];
 
-    /* ----------------------------------------------------
-       2. VARIÁVEIS DE ESTADO E PERSISTÊNCIA (LOCALSTORAGE)
-       ---------------------------------------------------- */
+    /* (LOCALSTORAGE)*/
     let usuarios = JSON.parse(localStorage.getItem("gh_usuarios")) || DADOS_INICIAIS_USUARIOS;
     let categorias = JSON.parse(localStorage.getItem("gh_categorias")) || DADOS_INICIAIS_CATEGORIAS;
     let itens = JSON.parse(localStorage.getItem("gh_itens")) || DADOS_INICIAIS_ITENS;
     let propostas = JSON.parse(localStorage.getItem("gh_propostas")) || DADOS_INICIAIS_PROPOSTAS;
     
-    // Usuário padrão conectado ao abrir o site (ID 1 = Bruce Wayne)
     let usuarioAtualId = Number(localStorage.getItem("gh_usuario_atual")) || 1;
 
     function salvarTudoNoLocalStorage() {
@@ -808,9 +770,7 @@
       localStorage.setItem("gh_usuario_atual", usuarioAtualId);
     }
 
-    /* ----------------------------------------------------
-       3. FUNÇÕES AUXILIARES BÁSICAS
-       ---------------------------------------------------- */
+    /* Começo das funcoes basicas */
     function obterUsuario(id) {
       for (let i = 0; i < usuarios.length; i++) {
         if (usuarios[i].id === id) return usuarios[i];
@@ -836,9 +796,7 @@
       return Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
 
-    /* ----------------------------------------------------
-       4. CONTROLE DE ABAS (NAVEGAÇÃO SIMPLES)
-       ---------------------------------------------------- */
+    /* Navegação de Abas */
     function abrirAba(nomeAba) {
       document.getElementById("aba-vitrine").classList.remove("ativa");
       document.getElementById("aba-colecao").classList.remove("ativa");
@@ -856,9 +814,6 @@
       if (nomeAba === 'propostas') renderizarPropostas();
     }
 
-    /* ----------------------------------------------------
-       5. SISTEMA DE USUÁRIO ATIVO (SIMULAÇÃO DE LOGIN)
-       ---------------------------------------------------- */
     function popularSelectUsuarios() {
       const select = document.getElementById("select-usuario");
       select.innerHTML = "";
@@ -884,9 +839,6 @@
       alert("Sessão alterada para: " + obterUsuario(usuarioAtualId).nome);
     }
 
-    /* ----------------------------------------------------
-       6. RENDERIZAR VITRINE PÚBLICA & FILTROS
-       ---------------------------------------------------- */
     function renderizarVitrine() {
       const grade = document.getElementById("grade-vitrine");
       grade.innerHTML = "";
@@ -927,7 +879,7 @@
         }
 
         card.innerHTML = `
-          <div class="card-imagem-container" onclick="abrirModalImagem('${foto}', '${item.nome.replace(/'/g, "\\'")}', '${item.franquia} • ${categoria.nome}')" title="Clique para ver em tamanho real">
+        <div class="card-imagem-container" onclick="abrirModalImagem('${foto}', '${item.nome.replace(/'/g, "\\'")}', '${item.franquia} • ${categoria.nome}')" title="Clique para ver em tamanho real">
             <img src="${foto}" alt="${item.nome}" class="card-imagem" onerror="this.onerror=null; this.src='${IMAGEM_PADRAO}';">
             <span class="card-imagem-dica">🔍 Ampliar</span>
           </div>
@@ -963,9 +915,7 @@
       renderizarVitrine();
     }
 
-    /* ----------------------------------------------------
-       7. CRUD DE ITENS (MINHA COLEÇÃO)
-       ---------------------------------------------------- */
+    /* MINHA COLEÇÃO (aparecer as minhas peças) */
     function renderizarMinhaColecao() {
       const grade = document.getElementById("grade-minha-colecao");
       grade.innerHTML = "";
@@ -1118,9 +1068,7 @@
       atualizarContadorPropostas();
     }
 
-    /* ----------------------------------------------------
-       8. SISTEMA DE PROPOSTAS DE TROCA
-       ---------------------------------------------------- */
+    /* Estrutura de propostas */
     function abrirModalTroca(itemIdDesejado) {
       const itemDesejado = obterItem(itemIdDesejado);
       if (!itemDesejado) return;
@@ -1185,7 +1133,6 @@
       const recebidas = propostas.filter(p => p.para_usuario_id === usuarioAtualId);
       const enviadas = propostas.filter(p => p.de_usuario_id === usuarioAtualId);
 
-      // Renderizar Recebidas
       if (recebidas.length === 0) {
         tabelaRecebidas.innerHTML = "<tr><td colspan='5' style='color: var(--cor-texto-secundaria);'>Nenhuma proposta recebida no momento.</td></tr>";
       } else {
@@ -1215,7 +1162,6 @@
         });
       }
 
-      // Renderizar Enviadas
       if (enviadas.length === 0) {
         tabelaEnviadas.innerHTML = "<tr><td colspan='5' style='color: var(--cor-texto-secundaria);'>Você ainda não enviou propostas para ninguém.</td></tr>";
       } else {
@@ -1256,7 +1202,6 @@
         return;
       }
 
-      // Inversão de titularidade
       itemOferecido.usuario_id = proposta.para_usuario_id;
       itemOferecido.status = "Coleção";
 
@@ -1323,16 +1268,13 @@
       }
     }
 
-    // Fecha o modal ao pressionar ESC
     document.addEventListener("keydown", function(e) {
       if (e.key === "Escape") {
         fecharModais();
       }
     });
 
-    /* ----------------------------------------------------
-       9. INICIALIZAÇÃO DA PÁGINA
-       ---------------------------------------------------- */
+    /* Começar a pagina */
     function iniciarSistema() {
       const selectFiltroCat = document.getElementById("filtro-categoria");
       const selectFormCat = document.getElementById("form-categoria");
